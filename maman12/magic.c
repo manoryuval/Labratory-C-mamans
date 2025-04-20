@@ -13,7 +13,7 @@ int check_amount_elements(int count);/*Function check the amount of elements tha
 
 */
 int main() {
-	int u,v,i,j;
+	int i,j;
     int count=0;
 	adjmat mat;
 	/*Get the elements of matrix. row by row*/
@@ -43,6 +43,8 @@ int main() {
     }
 	return FALSE;
 }
+return 0;   
+}
 int check_amount_elements(int count) { 
     if (count == N*N) {
         return 1;
@@ -54,5 +56,4 @@ int check_amount_elements(int count) {
         return 0;
     }
     
-}
 }
