@@ -13,7 +13,7 @@ int check_amount_elements(int count);/*Function check the amount of elements tha
 
 */
 int main() {
-	int u,v,i,j
+	int u,v,i,j;
     int count=0;
 	adjmat mat;
 	/*Get the elements of matrix. row by row*/
@@ -21,7 +21,7 @@ int main() {
 	for(i=0;i<N;i++){
 		printf("Enter element at row [%d]: ", i + 1);
 		for(j=0;j<N;j++){
-		scanf("%d",&mat[i][j])
+		scanf("%d",&mat[i][j]);
         count++;
 		}
 	}
