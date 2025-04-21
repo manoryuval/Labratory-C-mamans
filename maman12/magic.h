@@ -11,4 +11,7 @@ int check_amount_elements(int count);
 void print_matrix(int mat[N][N]);
 
 
+
+
+
 #endif
