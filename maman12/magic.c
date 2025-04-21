@@ -17,14 +17,14 @@ int main() {
 		for(j=0;j<N;j++){
             if ((a=scanf("%d",&mat[i][j]))!= EOF)
             {
-                if (!samenum  && duplicate_num(mat[i][j], seen_numbers, count)) {
+                if (!samenum  && is_duplicate(mat[i][j], seen_numbers, count)) {
                     samenum = TRUE;
                 }
                 seen_numbers[count] = mat[i][j];
-                if (check_int(a) == FALSE) {
+                if (is_int(a) == FALSE) {
                     return FALSE;
                 }
-                if (num_out_range(mat[i][j])){
+                if (is_out_range(mat[i][j])){
                     outrange = TRUE;
                 }
                 count++;
@@ -41,16 +41,19 @@ int main() {
     /*Print the elements of the matrix*/
     print_matrix(mat);
 	
-    if (samenum == TRUE) {
-        printf("Error: There are duplicate numbers in the matrix.\n");
+    if (is_magic(mat) && samenum == FALSE && outrange == FALSE) {
+            printf("The matrix is a magic square.\n");
+    } else if  (samenum == TRUE) {
+        printf("The matrix is NOT a magic square. There are duplicate numbers in the matrix.\n");
         return FALSE;
-    }
-    if (outrange == TRUE) {
-        printf("Error: One or more numbers are out of range.\n");
+    } else if (outrange == TRUE) {
+        printf("The matrix is NOT a magic square. One or more numbers are out of range.\n");
         return FALSE;
+    } else {
+        printf("The matrix is NOT a magic square.\n");
     }
    
-    
+
 	return FALSE;
 }
 
