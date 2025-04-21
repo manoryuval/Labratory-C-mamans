@@ -2,3 +2,4 @@ magic.o
 utils.o
 magic
 *.exe
+.vscode/
