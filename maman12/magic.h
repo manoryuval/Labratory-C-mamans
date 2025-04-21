@@ -10,6 +10,9 @@
 int check_amount_elements(int count);
 void print_matrix(int mat[N][N]);
 int check_int(int n);
+int duplicate_num(int num, int *seen_numbers, int count);
+int num_out_range( int n);
+
 
 
 

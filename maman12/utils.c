@@ -40,3 +40,19 @@ int check_int(int n) {
     }
     return TRUE;
 }
+
+int duplicate_num(int num, int *seen_numbers, int count) {
+    int i;
+    for (i = 0; i < count; i++) {
+        if (seen_numbers[i] == num) {
+            return TRUE; 
+        }
+    }
+    return FALSE;
+}
+int num_out_range(int n) {
+    if (n > N*N || n < 1) {
+        return TRUE;
+    }
+    return FALSE;
+}
