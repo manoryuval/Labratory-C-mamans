@@ -1,39 +1,34 @@
 #include "magic.h"
 
-typedef int adjmat[N][N];/*magic matrix, size N*/
+typedef int mat[N][N];/*magic matrix, size N*/
 /**
 
 */
 int main() {
-	int i,j;
+	int i,j,n;
     int count=0;
-	adjmat mat;
+	mat mat;
 	/*Get the elements of matrix. row by row*/
  	printf("Please enter the elements of a %d x %d matrix:\n", N,N );	
 	for(i=0;i<N;i++){
 		for(j=0;j<N;j++){
-		scanf("%d",&mat[i][j]);
-        count++;
-		}
-	}
-    if (!check_amount_elements(count)) {
-        return 1;
-	printf("\n");
-	/*Print the matrix*/
-	printf("The matrix you entered is:\n");
-	for (i=0;i<N; i++)
-		printf("\t[%d] ",i);
-	printf("\n");
-
-	for (i=0;i<N; i++) {
-		printf("[%d]\t ",i);
-        for (j=0;j<N;j++) {
-            printf("%d\t ", mat[i][j]);
+            if (scanf("%d",&mat[i][j])!= EOF)
+            {
+                count++;
+            }
         }
-        printf("\n");
     }
+    if (scanf("%d",&n)!= EOF)
+    {
+        count++;
+    } 
+    if (!check_amount_elements(count)) {
+        return FALSE;
+    }
+   
+    /*Print the elements of the matrix*/
+    print_matrix(mat);
+	
 	return FALSE;
-}
-return 0;   
 }
 
