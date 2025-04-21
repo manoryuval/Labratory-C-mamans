@@ -8,7 +8,7 @@ int check_amount_elements(int count) {
     }else if (count < N*N) {
         printf("Error: Too few numbers were received.Expected %d elements, but got %d.\n", N*N, count);
         return FALSE;
-    }else if (count > N*N) {
+    }else {
         printf("Error: Too many numbers were received.Expected %d elements, but got %d.\n", N*N, count);
         return FALSE;
     }   
