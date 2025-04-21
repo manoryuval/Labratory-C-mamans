@@ -5,15 +5,18 @@ typedef int mat[N][N];/*magic matrix, size N*/
 
 */
 int main() {
-	int i,j,n;
+	int i,j,n,a;
     int count=0;
 	mat mat;
 	/*Get the elements of matrix. row by row*/
  	printf("Please enter the elements of a %d x %d matrix:\n", N,N );	
 	for(i=0;i<N;i++){
 		for(j=0;j<N;j++){
-            if (scanf("%d",&mat[i][j])!= EOF)
+            if ((a=scanf("%d",&mat[i][j]))!= EOF)
             {
+                if (check_int(a) == FALSE) {
+                    return FALSE;
+                }
                 count++;
             }
         }

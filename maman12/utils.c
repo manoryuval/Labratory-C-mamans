@@ -33,3 +33,10 @@ void print_matrix(int mat[N][N]) {
         printf("\n");
     }
 }
+int check_int(int n) {
+    if (n == 0) {
+        printf("Error: an invalid character was received.\n");
+        return FALSE;
+    }
+    return TRUE;
+}
