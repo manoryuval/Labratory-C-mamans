@@ -1,7 +1,8 @@
 #include "magic.h"
 
-
-
+/*
+Ensures the correct number of elements (N * N) has been entered.
+*/
 int check_amount_elements(int count) { 
     if (count == N*N) {
         return TRUE;
@@ -13,7 +14,9 @@ int check_amount_elements(int count) {
         return FALSE;
     }   
 }
-
+/*
+Print the matrix
+*/
 void print_matrix(int mat[N][N]) {
     int i,j;
 
@@ -33,6 +36,9 @@ void print_matrix(int mat[N][N]) {
         printf("\n");
     }
 }
+/*Validates if the input is an integer.
+ If it is not, return FALSE. Otherwise, return TRUE.
+ */
 int is_int(int n) {
     if (n == 0) {
         printf("Error: an invalid character was received.\n");
@@ -41,6 +47,9 @@ int is_int(int n) {
     return TRUE;
 }
 
+/*Checks if a number has already been entered in the matrix.
+ If it has, return TRUE. Otherwise, return FALSE.
+*/
 int is_duplicate(int num, int *seen_numbers, int count) {
     int i;
     for (i = 0; i < count; i++) {
@@ -50,12 +59,18 @@ int is_duplicate(int num, int *seen_numbers, int count) {
     }
     return FALSE;
 }
+/*
+ Checks if a number is outside the valid range (1 to N^2).
+ */
 int is_out_range(int n) {
     if (n > N*N || n < 1) {
         return TRUE;
     }
     return FALSE;
 }
+/*
+Determines if the matrix is a magic square.
+*/
 int is_magic(int mat[N][N]) {
     int i,j;
     int sum = 0;

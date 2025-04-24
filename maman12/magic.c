@@ -2,7 +2,9 @@
 
 typedef int mat[N][N];/*magic matrix, size N*/
 /**
-
+This program is designed to determine whether a given matrix is a magic square.
+A magic square is a square matrix in which the sum of every row, column, and diagonal is the same,
+and all numbers are unique and within a specific range.
 */
 int main() {
 	int i,j,n,a;
