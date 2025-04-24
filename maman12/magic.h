@@ -2,7 +2,7 @@
 #define MAGIC_H
 #include <stdio.h>
 
-#define N 3 /*Size of the matrix*/  
+#define N 5 /*Size of the matrix*/  
 #define TRUE 1
 #define FALSE 0
 
