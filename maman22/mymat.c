@@ -16,32 +16,35 @@ int to_zero_mat(mat A){
     return 0;
 }
 mat* get_matrix_by_name( char* name) {
-    if (strcmp(name, "MAT_A") == 0) return & MAT_A;
-    if (strcmp(name, "MAT_B") == 0) return & MAT_B;
-    if (strcmp(name, "MAT_C") == 0) return & MAT_C;
-    if (strcmp(name, "MAT_D") == 0) return & MAT_D;
-    if (strcmp(name, "MAT_E") == 0) return & MAT_E;
-    if (strcmp(name, "MAT_F") == 0) return & MAT_F;
+    if (strcmp(name, "MAT_A") == 0) return &MAT_A;
+    if (strcmp(name, "MAT_B") == 0) return &MAT_B;
+    if (strcmp(name, "MAT_C") == 0) return &MAT_C;
+    if (strcmp(name, "MAT_D") == 0) return &MAT_D;
+    if (strcmp(name, "MAT_E") == 0) return &MAT_E;
+    if (strcmp(name, "MAT_F") == 0) return &MAT_F;
     return NULL;
 }
 
-int read_mat(char* mat_name, char* values_str) {
-    mat* mat_ptr = get_matrix_by_name(mat_name);
-    mat* mat = mat_ptr;
+int read_mat(mat m, char* values_str) {
+    int row, col;
+    int i = 0;
+    double val;
+    char str_copy[1000];
+    strncpy(str_copy, values_str, sizeof(str_copy) - 1);
+    str_copy[sizeof(str_copy) - 1] = '\0'; 
 
-    char values_copy[512];
-    strncpy(values_copy, values_str, sizeof(values_copy));
-    values_copy[sizeof(values_copy) - 1] = '\0';
-
-    char* token = strtok(values_copy, ",");
-    int count = 0;
-
-    while (token && count < 16) {
-        double val = atof(token);
-        int row = count / 4;
-        int col = count % 4;
-        (*mat)[row][col] = val;
-        count++;
+    if (values_str == NULL) 
+        return 1;
+    printf("values_str: %s\n", values_str);
+    printf("str_copy: %s\n", str_copy);
+    char* token = strtok(str_copy, ",");
+    printf("token: %s\n", token);
+    while (token != NULL && i < SIZE_MAT) {
+        val = atof(token);
+        row = i / 4;
+        col = i % 4;
+        m[row][col] = val;
+        i++;
         token = strtok(NULL, ",");
     }
     return 0;

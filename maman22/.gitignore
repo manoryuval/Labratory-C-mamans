@@ -1,5 +1,6 @@
 mainnmat.o
 mymat.o
+parser.o
 mainnmat
 *.exe
 .vscode/
