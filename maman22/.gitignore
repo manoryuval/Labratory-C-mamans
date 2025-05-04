@@ -1,0 +1,5 @@
+mainnmat.o
+mymat.o
+mainnmat
+*.exe
+.vscode/
