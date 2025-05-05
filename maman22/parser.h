@@ -14,5 +14,8 @@ typedef enum {
 } CommandType;
 
 CommandType get_command_by_name(char* name);
+void trim_whitespace(char* str);
+void remove_whitespace(char* str);
+
 
 #endif

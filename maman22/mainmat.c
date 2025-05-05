@@ -30,15 +30,21 @@ int main(){
         char* arg4 = NULL;
         printf("command: %s\n", command);
         if (get_command_by_name(command) == CMD_READ){
-            arg1 = strtok(NULL, " ");
-            arg2 = strtok(NULL, " ");
+            arg1 = strtok(NULL, ",");
+            arg2 = strtok(NULL, "\0");
             arg3 = strtok(NULL, " ");
+            trim_whitespace(arg1);
+            remove_whitespace(arg2);
         }else
         {
             arg1 = strtok(NULL, ",");
             arg2 = strtok(NULL, ",");
             arg3 = strtok(NULL, ",");
-            arg4 = strtok(NULL, ",");  
+            arg4 = strtok(NULL, ",");
+            if(arg1) trim_whitespace(arg1);
+            if(arg2) trim_whitespace(arg2);  
+            if(arg3) trim_whitespace(arg3);
+            if(arg4) trim_whitespace(arg4);
         }
         printf("arg1: %s\n", arg1);
         printf("arg2: %s\n", arg2);
