@@ -19,14 +19,31 @@ int main(){
             printf("Error reading input\n");
             break;
         }
+        input[strcspn(input, "\n")] = '\0';
         mat* mat_arg1 = NULL;
         mat* mat_arg2 = NULL;
         mat* mat_arg3 = NULL;
         char* command = strtok(input, " \n");
-        char* arg1 = strtok(NULL, ",");
-        char* arg2 = strtok(NULL, ",");
-        char* arg3 = strtok(NULL, ",");
-        char* arg4 = strtok(NULL, ",");
+        char* arg1 = NULL;
+        char* arg2 = NULL;
+        char* arg3 = NULL;
+        char* arg4 = NULL;
+        printf("command: %s\n", command);
+        if (get_command_by_name(command) == CMD_READ){
+            arg1 = strtok(NULL, " ");
+            arg2 = strtok(NULL, " ");
+            arg3 = strtok(NULL, " ");
+        }else
+        {
+            arg1 = strtok(NULL, ",");
+            arg2 = strtok(NULL, ",");
+            arg3 = strtok(NULL, ",");
+            arg4 = strtok(NULL, ",");  
+        }
+        printf("arg1: %s\n", arg1);
+        printf("arg2: %s\n", arg2);
+        printf("arg3: %s\n", arg3);
+        printf("arg4: %s\n", arg4);
         switch (get_command_by_name(command)) {
             case CMD_READ:{
                 if (arg1&&arg2&&!arg3){
@@ -34,7 +51,7 @@ int main(){
                     read_mat(*mat_arg1, arg2);
                 } 
                 break;
-            }    
+            }
             case CMD_ADD:{
                 if (arg1&&arg2&&arg3&&!arg4){
                     mat_arg1 = get_matrix_by_name(arg1);
@@ -89,7 +106,6 @@ int main(){
                 if (arg1&&!arg2){
                     mat_arg1 = get_matrix_by_name(arg1);
                     print_mat(*mat_arg1);
-
                 }              
                 break;
             }
