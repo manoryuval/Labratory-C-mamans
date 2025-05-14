@@ -55,9 +55,23 @@ void remove_whitespace(char* str) {
 
 ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, char* arg3, char* arg4) {
     if (get_command_by_name(command) == CMD_INVALID) return ERR_INVALID_COMMAND_NAME;
+    printf("input: %s\n", input);
+
+    if (check_multiple_commas(input)) return ERR_MULTIPLE_COMMA;
+    if (check_missing_commas(input)) return ERR_MISSING_COMMA;
+
+    int len = strlen(input);
+    int k = len - 1;
+    while (k >= 0 && isspace((unsigned char)input[k])) {
+        k--;
+    }
+    if (k >= 0 && input[k] == ',') {
+        return ERR_TEXT_AFT_END;
+    }
     
-    
-    
+
+
+
     /*מקס 0*/
     if (strcmp(command, "stop") != 0 )
     {    
@@ -72,8 +86,13 @@ ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, ch
     }
     /*בכל הפקודות שצריך  מקס 1:*/
     if(strcmp(command, "print_mat") != 0 && strcmp(command, "stop") != 0 ){
-        if (arg1 == NULL) return ERR_MISSING_ARG;            
-        if (get_matrix_by_name(arg1) == NULL) return ERR_INVALID_MATRIX_NAME;
+        if (arg2 == NULL) return ERR_MISSING_ARG;            
+        if (strcmp(command, "mul_scalar")==0)
+        {
+            if (!is_number(arg2)) return ERR_ARG_NOT_SCALAR;            
+        }else if ( strcmp(command, "read_mat") != 0){
+            if (get_matrix_by_name(arg2) == NULL) return ERR_INVALID_MATRIX_NAME;
+        }
     }else
     {
         if (arg2 != NULL)
@@ -83,33 +102,22 @@ ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, ch
     }
     
     /*בכל הפקודות שצריך מקס 2 arg2:*/
-    if(strcmp(command, "print_mat") != 0 && strcmp(command, "stop") != 0 ){
-        if (arg2 == NULL) return ERR_MISSING_ARG;
-        if (strcmp(command, "mul_scalar")==0)
-        {
-            if (!is_number(arg2)) return ERR_ARG_NOT_SCALAR;            
-        }else if ( strcmp(command, "read_mat") != 0){
-            if (get_matrix_by_name(arg2) == NULL) return ERR_INVALID_MATRIX_NAME;
-        }
-        }else
+    if(strcmp(command, "print_mat") != 0 &&  strcmp(command, "stop") != 0 && strcmp(command, "read_mat") != 0 && strcmp(command, "trans_mat") != 0){
+        if (arg3 == NULL) return ERR_MISSING_ARG;
+        if (get_matrix_by_name(arg3) == NULL) return ERR_INVALID_MATRIX_NAME;
+
+        
+    }else
     {
         if (arg3 != NULL)
         {
             return ERR_TEXT_AFT_END;
         }
     }
-
-
     /*  מקס 3*/
-    if(strcmp(command, "print_mat") != 0 && strcmp(command, "read_mat") != 0 && strcmp(command, "trans_mat") != 0 && strcmp(command, "stop") != 0){
-        if (arg3 == NULL) return ERR_MISSING_ARG;
-        if (get_matrix_by_name(arg3) == NULL) return ERR_INVALID_MATRIX_NAME;
-    }else
+    if (arg4 != NULL)
     {
-        if (arg4 != NULL)
-        {
-            return ERR_TEXT_AFT_END;
-        }
+        return ERR_TEXT_AFT_END;
     }
 
     if (strcmp(command, "read_mat") == 0)
@@ -120,6 +128,7 @@ ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, ch
         str_copy[sizeof(str_copy) - 1] = '\0'; 
         char* token = strtok(str_copy, ",");
         while (token != NULL && i < SIZE_MAT) {
+            trim_whitespace(token);
             if (is_number(token) == 0)
             {
                 return ERR_ARG_NOT_NUM;
@@ -128,16 +137,9 @@ ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, ch
             token = strtok(NULL, ",");
         }
     }
-
-    /*( זה צריך להיות בהתחלה) לסווג כמוץ פסיקים לפי פקודות ולבדוק*/
-
-
-
 return VALID;
 }
-/*
-פסיק במקום לא חוקי
-*/
+
 int is_number(char* str) {
     int i = 0;
     int dot_count = 0;
@@ -160,28 +162,54 @@ int is_number(char* str) {
     return 1;
 }
 
-int count_commas(char* str) {
-    int count = 0;
-    while (*str) {
-        if (*str == ',') {
-            count++;
+int check_multiple_commas(char* input) {
+    int j;
+    char copy_input[1000];
+    strncpy(copy_input, input, sizeof(copy_input) - 1);
+        copy_input[sizeof(copy_input) - 1] = '\0';
+        input[strcspn(input, "\n")] = '\0';
+    remove_whitespace(copy_input);
+    for (j = 0; copy_input[j + 1] != '\0'; j++) {
+        if (copy_input[j] == ',' && copy_input[j + 1] == ',') {
+            return 1;
         }
-        str++;
     }
-    return count;
+    return 0;
 }
 
-/*
+int check_missing_commas(const char* input) {
+    char str_copy[1000];
+    strncpy(str_copy, input, sizeof(str_copy) - 1);
+    str_copy[sizeof(str_copy) - 1] = '\0';
 
-if (strstr(input, ",,") != NULL) {
-        return ERR_MULTIPLE_COMMA;
+    char* token = strtok(str_copy, " \t");
+    int arg_index = 0;
+    char* prev = NULL;
+
+    while (token != NULL) {
+        if (strlen(token) == 0) {
+            token = strtok(NULL, " \t");
+            continue;
+        }
+
+        arg_index++;
+
+        if (arg_index == 1) {
+            token = strtok(NULL, " \t");
+            continue;
+        }
+
+        if (prev != NULL) {
+            int prev_len = strlen(prev);
+
+            if (prev[prev_len - 1] != ',' && token[0] != ',') {
+                return 1;
+            }
+        }
+
+        prev = token;
+        token = strtok(NULL, " \t");
     }
-    int len = strlen(input);
-    if (input[len - 1] == ',') {
-        return ERR_TEXT_AFT_END;
-    }
-    if( count_commas(input) > 0) {
-        return ERR_MULTIPLE_COMMA;
-    }
+
+    return 0; 
 }
-*/

@@ -26,24 +26,24 @@ int main(){
         mat* mat_arg1 = NULL;
         mat* mat_arg2 = NULL;
         mat* mat_arg3 = NULL;
-        char* command = strtok(input, " \n");
+        char* command = strtok(input, " \n\t");
         char* arg1 = NULL;
         char* arg2 = NULL;
         char* arg3 = NULL;
         char* arg4 = NULL;
         printf("command: %s\n", command);
         if (get_command_by_name(command) == CMD_READ){
-            arg1 = strtok(NULL, ",");
+            arg1 = strtok(NULL, " ,");
             arg2 = strtok(NULL, "\0");
             arg3 = strtok(NULL, " ");
-            trim_whitespace(arg1);
-            remove_whitespace(arg2);
+            if (arg1) trim_whitespace(arg1);
+            /*if (arg2) remove_whitespace(arg2);*/
         }else
         {
             arg1 = strtok(NULL, ",");
             arg2 = strtok(NULL, ",");
             arg3 = strtok(NULL, ",");
-            arg4 = strtok(NULL, "");/*לוודא שזה נכון*/
+            arg4 = strtok(NULL, "");
             if(arg1) trim_whitespace(arg1);
             if(arg2) trim_whitespace(arg2);  
             if(arg3) trim_whitespace(arg3);
@@ -53,9 +53,10 @@ int main(){
         printf("arg2: %s\n", arg2);
         printf("arg3: %s\n", arg3);
         printf("arg4: %s\n", arg4);
-
         
 
+        
+        printf("copy_input: %s\n", copy_input);
         switch (validator(copy_input, command, arg1, arg2, arg3, arg4)) {
         case ERR_INVALID_MATRIX_NAME:{
             printf("Undefined matrix name\n");
@@ -86,7 +87,7 @@ int main(){
             break;
         }
         case ERR_MULTIPLE_COMMA:{
-            printf("Multiple commas\n");
+            printf("Multiple consecutive commas\n");
             break;
         }
         case ERR_ARG_NOT_SCALAR:{

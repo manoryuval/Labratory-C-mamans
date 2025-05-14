@@ -32,7 +32,9 @@ void trim_whitespace(char* str);
 void remove_whitespace(char* str);
 ValidationInput validator(char* input,char* command, char* arg1, char* arg2, char* arg3, char* arg4);
 int is_number(char* str);
-int count_commas(char* str);
+int check_multiple_commas(char* input);
+int check_missing_commas(const char* input);
+
 
 
 #endif
