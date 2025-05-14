@@ -184,6 +184,7 @@ int check_missing_commas(const char* input) {
     int last_was_comma = 0;
 
     while (input[i] != '\0') {
+        /* דילוג על רווחים וטאבים */
         while (input[i] == ' ' || input[i] == '\t') {
             i++;
         }
@@ -192,34 +193,41 @@ int check_missing_commas(const char* input) {
 
         arg_index++;
 
+        /* קריאת הפקודה עצמה */
         if (arg_index == 1) {
-            while (input[i] != '\0' && input[i] != ' ' && input[i] != '\t' && input[i] != ',' ) {
-                
+            while (input[i] != '\0' && input[i] != ' ' && input[i] != '\t' && input[i] != ',') {
                 i++;
             }
+
+            /* דילוג על רווחים וטאבים אחרי הפקודה */
             while (input[i] == ' ' || input[i] == '\t') {
                 i++;
             }
+
+            /* בדיקה אם יש פסיק ישירות אחרי הפקודה */
             if (input[i] == ',') {
-                return 2;
+                return 2; /* פסול – פסיק ישירות אחרי הפקודה */
             }
-        
 
             continue;
         }
-        printf("arg_index: %d, last: %d\n", arg_index,last_was_comma);
-        if (!last_was_comma && arg_index >2) {
-            return 1; 
+
+        /* בדיקה אם חסר פסיק בין הארגומנטים (מתחיל מהשני) */
+        if (!last_was_comma && arg_index > 2) {
+            return 1; /* חסר פסיק */
         }
 
+        /* קפיצה על הטוקן (עד לרווח, טאב או פסיק) */
         while (input[i] != '\0' && input[i] != ' ' && input[i] != '\t' && input[i] != ',') {
             i++;
         }
 
+        /* דילוג על רווחים אחרי הטוקן */
         while (input[i] == ' ' || input[i] == '\t') {
             i++;
         }
 
+        /* בדיקה אם יש פסיק */
         if (input[i] == ',') {
             last_was_comma = 1;
             i++;
@@ -228,5 +236,5 @@ int check_missing_commas(const char* input) {
         }
     }
 
-    return 0;
+    return 0; /* הכל תקין */
 }
