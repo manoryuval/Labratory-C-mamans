@@ -55,10 +55,11 @@ void remove_whitespace(char* str) {
 
 ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, char* arg3, char* arg4) {
     if (get_command_by_name(command) == CMD_INVALID) return ERR_INVALID_COMMAND_NAME;
-    printf("input: %s\n", input);
 
     if (check_multiple_commas(input)) return ERR_MULTIPLE_COMMA;
-    if (check_missing_commas(input)) return ERR_MISSING_COMMA;
+    int index_comma= check_missing_commas(input);
+    if (index_comma==2) return ERR_ILEGAL_COMMA;
+    else if (index_comma==1) return ERR_MISSING_COMMA;
 
     int len = strlen(input);
     int k = len - 1;
@@ -178,38 +179,54 @@ int check_multiple_commas(char* input) {
 }
 
 int check_missing_commas(const char* input) {
-    char str_copy[1000];
-    strncpy(str_copy, input, sizeof(str_copy) - 1);
-    str_copy[sizeof(str_copy) - 1] = '\0';
+    int i = 0;
+    int arg_index = 0;         
+    int last_was_comma = 0;
 
-    char* token = strtok(str_copy, " \t");
-    int arg_index = 0;
-    char* prev = NULL;
-
-    while (token != NULL) {
-        if (strlen(token) == 0) {
-            token = strtok(NULL, " \t");
-            continue;
+    while (input[i] != '\0') {
+        while (input[i] == ' ' || input[i] == '\t') {
+            i++;
         }
+
+        if (input[i] == '\0') break;
 
         arg_index++;
 
         if (arg_index == 1) {
-            token = strtok(NULL, " \t");
+            while (input[i] != '\0' && input[i] != ' ' && input[i] != '\t' && input[i] != ',' ) {
+                
+                i++;
+            }
+            while (input[i] == ' ' || input[i] == '\t') {
+                i++;
+            }
+            if (input[i] == ',') {
+                return 2;
+            }
+        
+
             continue;
         }
-
-        if (prev != NULL) {
-            int prev_len = strlen(prev);
-
-            if (prev[prev_len - 1] != ',' && token[0] != ',') {
-                return 1;
-            }
+        printf("arg_index: %d, last: %d\n", arg_index,last_was_comma);
+        if (!last_was_comma && arg_index >2) {
+            return 1; 
         }
 
-        prev = token;
-        token = strtok(NULL, " \t");
+        while (input[i] != '\0' && input[i] != ' ' && input[i] != '\t' && input[i] != ',') {
+            i++;
+        }
+
+        while (input[i] == ' ' || input[i] == '\t') {
+            i++;
+        }
+
+        if (input[i] == ',') {
+            last_was_comma = 1;
+            i++;
+        } else {
+            last_was_comma = 0;
+        }
     }
 
-    return 0; 
+    return 0;
 }

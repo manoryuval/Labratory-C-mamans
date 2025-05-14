@@ -55,8 +55,6 @@ int main(){
         printf("arg4: %s\n", arg4);
         
 
-        
-        printf("copy_input: %s\n", copy_input);
         switch (validator(copy_input, command, arg1, arg2, arg3, arg4)) {
         case ERR_INVALID_MATRIX_NAME:{
             printf("Undefined matrix name\n");
