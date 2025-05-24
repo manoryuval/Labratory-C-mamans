@@ -25,6 +25,7 @@ int main(){
             printf("Error reading input\n");
             break;
         }
+        printf("%s", input);
         if (strlen(input) == MAX_INPUT - 1 && input[MAX_INPUT - 2] != '\n') {
             printf("Input too long, please enter less than %d characters\n", MAX_INPUT);
             continue;
@@ -44,7 +45,6 @@ int main(){
         char* arg2 = NULL;
         char* arg3 = NULL;
         char* arg4 = NULL;
-        printf("command: %s\n", command);
         if (get_command_by_name(command) == CMD_READ){
             arg1 = strtok(NULL, " ,");
             arg2 = strtok(NULL, "\0");
@@ -62,12 +62,6 @@ int main(){
             if(arg3) trim_whitespace(arg3);
             if(arg4) trim_whitespace(arg4);
         }
-        printf("arg1: %s\n", arg1);
-        printf("arg2: %s\n", arg2);
-        printf("arg3: %s\n", arg3);
-        printf("arg4: %s\n", arg4);
-        
-
         switch (validator(copy_input, command, arg1, arg2, arg3, arg4)) {
         case ERR_INVALID_MATRIX_NAME:{
             printf("Undefined matrix name\n");
@@ -106,7 +100,6 @@ int main(){
             break;
         }
         case VALID:{
-            printf("Valid command\n");
             switch (get_command_by_name(command)) {
                 case CMD_READ:{
                     if (arg1&&arg2&&!arg3){

@@ -38,10 +38,7 @@ int read_mat(mat m, char* values_str) {
 
     if (values_str == NULL) 
         return 1;
-    printf("values_str: %s\n", values_str);
-    printf("str_copy: %s\n", str_copy);
     char* token = strtok(str_copy, ",");
-    printf("token: %s\n", token);
     while (token != NULL && i < SIZE_MAT) {
         val = atof(token);
         row = i / 4;
