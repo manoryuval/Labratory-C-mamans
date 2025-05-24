@@ -1,6 +1,6 @@
-mainnmat.o
+mainmat.o
 mymat.o
 parser.o
-mainnmat
+mainmat
 *.exe
 .vscode/
