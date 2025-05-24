@@ -52,15 +52,11 @@ void remove_whitespace(char* str) {
     *q = '\0';
 }
 
-
 ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, char* arg3, char* arg4) {
-    
-    if (check_multiple_commas(input)) return ERR_MULTIPLE_COMMA;
-    int index_comma= check_missing_commas(input);
-    if (index_comma==2) return ERR_ILEGAL_COMMA;
-    else if (index_comma==1) return ERR_MISSING_COMMA;
     if (get_command_by_name(command) == CMD_INVALID) return ERR_INVALID_COMMAND_NAME;
 
+    if (check_multiple_commas(input)) return ERR_MULTIPLE_COMMA;
+    
     int len = strlen(input);
     int k = len - 1;
     while (k >= 0 && isspace((unsigned char)input[k])) {
@@ -137,7 +133,12 @@ ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, ch
             i++;
             token = strtok(NULL, ",");
         }
+
     }
+    int index_comma= check_missing_commas(input);
+    if (index_comma==2) return ERR_ILEGAL_COMMA;
+    else if (index_comma==1) return ERR_MISSING_COMMA;
+
 return VALID;
 }
 

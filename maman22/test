@@ -1,21 +1,24 @@
-read_mat(MAT_A, "5.2,2,3,4,5,6,7,8,9,10,11,12,13");
-    read_mat(MAT_B, "1,1,1,1,1,1,1,1,1,1,1,1");
-    print_mat(MAT_A);
-    print_mat(MAT_B);
-    sub_mat(MAT_A, MAT_B, MAT_C);
-    mul_mat(MAT_A, MAT_B, MAT_D);
-    mul_skalar(MAT_A, 2, MAT_E);
-    trans_mat(MAT_A, MAT_F);
-    printf("Subtraction:\n");
-    print_mat(MAT_C);
-    printf("Multiplication:\n");
-    print_mat(MAT_D);
-    printf("Multiplication by scalar:\n");
-    print_mat(MAT_E);
-    printf("Transpose:\n");
-    print_mat(MAT_F);
-    stop();
-    printf("didnt stop:\n");
-
-    
-
+print_mat MAT_A .
+print_mat MAT_
+print_mat ,MAT_C
+read_mat MAT_A, 1, 2, 3, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6, 6
+read_mat MAT_B, 1, 2.3456, -7.89
+read_mat MAT_C, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
+print_mat MAT_A
+print_mat MAT_B
+print_mat MAT_C
+add_mat MAT_A,MAT_B,MAT_D
+print_mat MAT_D
+sub_mat MAT_B,MAT_A,MAT_E
+print_mat MAT_E
+mul_mat MAT_B, MAT_C, MAT_F
+print_mat MAT_F
+mul_scalar MAT_A, 12.5, MAT_A
+print_mat MAT_A
+trans_mat MAT_C, MAT_C
+print_mat MAT_C
+read_mat MAT_B, 0
+print_mat MAT_B
+mul_mat MAT_A,MAT_A,MAT_A
+print_mat MAT_A
+stop

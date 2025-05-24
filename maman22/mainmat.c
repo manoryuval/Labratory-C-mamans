@@ -40,9 +40,9 @@ int main(){
             /*if (arg2) remove_whitespace(arg2);*/
         }else
         {
-            arg1 = strtok(NULL, ",");
-            arg2 = strtok(NULL, ",");
-            arg3 = strtok(NULL, ",");
+            arg1 = strtok(NULL, " ,");
+            arg2 = strtok(NULL, " ,");
+            arg3 = strtok(NULL, " ,");
             arg4 = strtok(NULL, "");
             if(arg1) trim_whitespace(arg1);
             if(arg2) trim_whitespace(arg2);  
