@@ -27,6 +27,7 @@ mat* get_matrix_by_name( char* name) {
     return NULL;
 }
 
+/*Parses a comma separated string of values into matrix*/
 int read_mat(mat m, char* values_str) {
     int row, col;
     int i = 0;
@@ -52,6 +53,7 @@ int read_mat(mat m, char* values_str) {
     return 0;
 }
 
+/*Prints the contents of matrix A to stdout*/
 int print_mat(mat A){
     int i,j;
     for(i=0;i<4;i++){
@@ -63,6 +65,7 @@ int print_mat(mat A){
     return 0;
 }
 
+/*Computes C = A + B*/
 int add_mat(mat A, mat B, mat C){
     int i,j;
     for(i=0;i<4;i++){
@@ -73,6 +76,7 @@ int add_mat(mat A, mat B, mat C){
     return 0;
 }
 
+/*Computes C = A – B*/
 int sub_mat(mat A, mat B, mat C){
     int i,j;
     for(i=0;i<4;i++){
@@ -83,6 +87,7 @@ int sub_mat(mat A, mat B, mat C){
     return 0;
 }
 
+/*Computes C = A × B*/
 int mul_mat(mat A, mat B, mat C) {
     int i, j, k;
     mat temp;
@@ -104,6 +109,7 @@ int mul_mat(mat A, mat B, mat C) {
     return 0;
 }
 
+/*Computes B = A × x (scalar)*/
 int mul_skalar(mat A,double x, mat B){
     int i, j;
     mat temp;
@@ -122,6 +128,7 @@ int mul_skalar(mat A,double x, mat B){
     return 0;
 }
 
+/*Computes B = transpose(A)*/
 int trans_mat(mat A, mat B){
     int i, j;
     mat temp;
@@ -139,6 +146,7 @@ int trans_mat(mat A, mat B){
     }
     return 0;
 }
+/*Stops the program*/
 void stop() {
     exit(0);
 }

@@ -4,10 +4,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+/*The program allows users to perform various operations on matrices, including reading values, printing, addition, subtraction, multiplication, scalar 
+multiplication, and transposition. It features robust input parsing and 
+validation to handle different command formats and potential errors.
 
+Users can input up to a maximum of 100 characters per line.*/
 int main(){
-    char input[MAX_INPUT];
-    char copy_input[MAX_INPUT];
+    char input[MAX_INPUT];/*Buffer to store raw user input.*/
+    char copy_input[MAX_INPUT];/*Copy of the input for validation purposes.*/
+    /*Initialize all predefined matrices (MAT_A to MAT_F) to zero. */
     to_zero_mat(MAT_A);
     to_zero_mat(MAT_B);
     to_zero_mat(MAT_C);
@@ -20,6 +25,10 @@ int main(){
             printf("Error reading input\n");
             break;
         }
+        if (strlen(input) == MAX_INPUT - 1 && input[MAX_INPUT - 2] != '\n') {
+            printf("Input too long, please enter less than %d characters\n", MAX_INPUT);
+            continue;
+        }
         strncpy(copy_input, input, sizeof(copy_input) - 1);
         copy_input[sizeof(copy_input) - 1] = '\0';
         input[strcspn(input, "\n")] = '\0';
@@ -27,6 +36,10 @@ int main(){
         mat* mat_arg2 = NULL;
         mat* mat_arg3 = NULL;
         char* command = strtok(input, " \n\t");
+        if (command == NULL) {
+            printf("No command entered\n");
+            continue;
+        }
         char* arg1 = NULL;
         char* arg2 = NULL;
         char* arg3 = NULL;

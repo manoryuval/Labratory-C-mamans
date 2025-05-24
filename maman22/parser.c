@@ -2,6 +2,7 @@
 #include "parser.h"
 #include <ctype.h>
 
+/*Returns the corresponding CommandType enum for a given command string */
 CommandType get_command_by_name(char* name) {
     if (strcmp(name, "add_mat") == 0) return CMD_ADD;
     if (strcmp(name, "sub_mat") == 0) return CMD_SUB;
@@ -14,6 +15,7 @@ CommandType get_command_by_name(char* name) {
     return CMD_INVALID;
 }
 
+/* Trims leading and trailing whitespace from the given string */
 void trim_whitespace(char *str) {
     char *start = str;
     char *end;
@@ -39,6 +41,7 @@ void trim_whitespace(char *str) {
     str[len] = '\0';
 }
 
+/* Removes all whitespace characters from the given string */
 void remove_whitespace(char* str) {
     char* p = str;
     char* q = str;
@@ -51,7 +54,11 @@ void remove_whitespace(char* str) {
     }
     *q = '\0';
 }
-
+/*
+ Parses and validates the input string.
+ Extracts the command and up to four arguments into provided buffers.
+ Returns a ValidationInput code indicating the result.
+ */
 ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, char* arg3, char* arg4) {
     if (get_command_by_name(command) == CMD_INVALID) return ERR_INVALID_COMMAND_NAME;
 
@@ -66,10 +73,7 @@ ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, ch
         return ERR_TEXT_AFT_END;
     }
     
-
-
-
-    /*מקס 0*/
+    /*Validates the first argument based on the command type.*/
     if (strcmp(command, "stop") != 0 )
     {    
     if (arg1 == NULL) return ERR_MISSING_ARG;
@@ -81,7 +85,7 @@ ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, ch
             return ERR_TEXT_AFT_END;
         }
     }
-    /*בכל הפקודות שצריך  מקס 1:*/
+    /*Validates the second argument based on the command type.*/
     if(strcmp(command, "print_mat") != 0 && strcmp(command, "stop") != 0 ){
         if (arg2 == NULL) return ERR_MISSING_ARG;            
         if (strcmp(command, "mul_scalar")==0)
@@ -97,8 +101,8 @@ ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, ch
             return ERR_TEXT_AFT_END;
         }
     }
-    
-    /*בכל הפקודות שצריך מקס 2 arg2:*/
+
+    /*Validates the third argument based on the command type.*/
     if(strcmp(command, "print_mat") != 0 &&  strcmp(command, "stop") != 0 && strcmp(command, "read_mat") != 0 && strcmp(command, "trans_mat") != 0){
         if (arg3 == NULL) return ERR_MISSING_ARG;
         if (get_matrix_by_name(arg3) == NULL) return ERR_INVALID_MATRIX_NAME;
@@ -111,7 +115,7 @@ ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, ch
             return ERR_TEXT_AFT_END;
         }
     }
-    /*  מקס 3*/
+    /*Validates the fourth argument.*/
     if (arg4 != NULL)
     {
         return ERR_TEXT_AFT_END;
@@ -142,6 +146,7 @@ ValidationInput validator(char* input ,char* command, char* arg1, char* arg2, ch
 return VALID;
 }
 
+/* Returns 1 if the string represents a valid number, otherwise 0 */
 int is_number(char* str) {
     int i = 0;
     int dot_count = 0;
@@ -164,6 +169,7 @@ int is_number(char* str) {
     return 1;
 }
 
+/* Checks for multiple consecutive commas in the input string */
 int check_multiple_commas(char* input) {
     int j;
     char copy_input[1000];
@@ -179,6 +185,7 @@ int check_multiple_commas(char* input) {
     return 0;
 }
 
+/* Checks if there are missing commas between arguments */
 int check_missing_commas(const char* input) {
     int i = 0;
     int arg_index = 0;         
