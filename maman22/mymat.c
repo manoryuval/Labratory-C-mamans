@@ -147,5 +147,3 @@ int trans_mat(mat A, mat B){
 void stop() {
     exit(0);
 }
-
-
