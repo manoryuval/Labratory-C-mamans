@@ -16,6 +16,7 @@ int to_zero_mat(mat A){
     }
     return 0;
 }
+/*Maps a matrix name string to a mat enum.*/
 mat* get_matrix_by_name( char* name) {
     if (strcmp(name, "MAT_A") == 0) return &MAT_A;
     if (strcmp(name, "MAT_B") == 0) return &MAT_B;
