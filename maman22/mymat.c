@@ -6,7 +6,7 @@
 #include <math.h>
 mat MAT_A, MAT_B, MAT_C, MAT_D, MAT_E, MAT_F;
 
-
+/*Sets all elements of the matrix to zero. */
 int to_zero_mat(mat A){
     int i,j;
     for(i=0;i<4;i++){
