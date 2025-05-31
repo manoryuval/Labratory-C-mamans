@@ -5,13 +5,20 @@
 int main(int argc, char** argv) {
     int num;
     if (argc == 1) { 
-        do{
+        int result;
+        do {
             printf("enter a number: ");
-            scanf("%d", &num);
-            printf("%s", transcript_numbers(num));
-        }while(num != EOF);
-    }
-    else if (argc == 2) {
+            result = scanf("%d", &num);
+            if (result == 1) {
+                printf("%s", transcript_numbers(num));
+            } else if (result == EOF) {
+                break; 
+            } else {
+                fprintf(stderr, "Invalid input.\n");
+                break;
+            }
+        } while (1);
+    } else if (argc == 2) {
         FILE *file = fopen(argv[1], "r");
         if (file == NULL) {
             fprintf(stderr, "Could not open file %s\n", argv[1]);
@@ -23,9 +30,14 @@ int main(int argc, char** argv) {
         fclose(file);
     }else if (argc == 3) {
         FILE *file1 = fopen(argv[1], "r");
-        FILE *file2 = fopen(argv[2], "a");
+        FILE *file2 = fopen(argv[2], "w");
         if (file1 == NULL) {
             fprintf(stderr, "Could not open file %s\n", argv[1]);
+            return 1;
+        }
+        if (file2 == NULL) {
+            fprintf(stderr, "Could not open file %s\n", argv[2]);
+            fclose(file1);
             return 1;
         }
         while(fscanf(file1, "%d", &num) != EOF) {
@@ -35,7 +47,7 @@ int main(int argc, char** argv) {
         fclose(file2);
     }
     else {
-        printf("too many number of arguments.\n");
+        fprintf(stderr, "too many number of arguments.\n");
         return 1;
     }
     return 0;
