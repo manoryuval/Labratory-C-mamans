@@ -1,0 +1,6 @@
+numbers.o
+mymat.o
+parser.o
+numbers
+*.exe
+.vscode/
